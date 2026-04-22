@@ -1,18 +1,5 @@
 import { useIntersectionObserver } from '../hooks/useIntersectionObserver';
 
-const stats = [
-  { value: '25+', label: 'Years Experience' },
-  { value: '80+', label: 'Projects Delivered' },
-  { value: '$2B+', label: 'Capital Value Managed' },
-];
-
-const credentials = [
-  'Professional Engineer (P.Eng.), Licensed in 3 States',
-  'LEED Accredited Professional',
-  'Project Management Professional (PMP)',
-  'Member, American Society of Civil Engineers',
-];
-
 export const About = () => {
   const { ref, isVisible } = useIntersectionObserver();
 

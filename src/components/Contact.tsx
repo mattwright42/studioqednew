@@ -1,50 +1,21 @@
-import { useState } from 'react';
-import { Mail, Phone, Linkedin } from 'lucide-react';
+import { Mail, Phone } from 'lucide-react';
 import { useIntersectionObserver } from '../hooks/useIntersectionObserver';
-
-interface FormData {
-  name: string;
-  email: string;
-  message: string;
-}
 
 const contactInfo = [
   {
     icon: <Mail size={24} />,
-    // label: 'Email',
+    label: 'Email',
     value: 'info@studioqed.com',
   },
   {
     icon: <Phone size={24} />,
-    // label: 'Phone',
+    label: 'Phone',
     value: '650.804.6564',
   },
   
 ];
 export const Contact = () => {
-  const [formData, setFormData] = useState<FormData>({
-    name: '',
-    email: '',
-    message: '',
-  });
-  const [isSubmitted, setIsSubmitted] = useState(false);
   const { ref, isVisible } = useIntersectionObserver();
-
-  const handleChange = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
-  ) => {
-    setFormData({
-      ...formData,
-      [e.target.name]: e.target.value,
-    });
-  };
-
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    setIsSubmitted(true);
-    setFormData({ name: '', email: '', message: '' });
-    setTimeout(() => setIsSubmitted(false), 5000);
-  };
 
   return (
     <section

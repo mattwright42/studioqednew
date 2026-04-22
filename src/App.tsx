@@ -1,7 +1,6 @@
 import { Navbar } from './components/Navbar';
 import { Hero } from './components/Hero';
 import { Slider } from './components/Slider';
-import { Services } from './components/Services';
 import { CaseStudies } from './components/CaseStudies';
 import { About } from './components/About';
 import { Contact } from './components/Contact';

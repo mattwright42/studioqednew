@@ -1,4 +1,5 @@
 import { useIntersectionObserver } from "../hooks/useIntersectionObserver";
+import { useState } from "react";
 import granblue from "../img/GRANBLUE.png";
 import tmntPackage from "../img/TMNT_PACKAGE.png";
 import rf3sJournal from "../img/RF3S_journal.png";
@@ -103,6 +104,11 @@ const caseStudies: CaseStudyData[] = [
 export const CaseStudies = () => {
   const { ref, isVisible } = useIntersectionObserver();
 
+  const [selectedImage, setSelectedImage] = useState<{
+    src: string;
+    alt: string;
+  } | null>(null);
+
   return (
     <section
       id="case-studies"
@@ -121,45 +127,85 @@ export const CaseStudies = () => {
         </div>
 
         <div className="space-y-20">
-          {caseStudies.map((study, index) => (
-            <div
-              key={index}
-              className={`border-t-2 border-divider pt-12${index === caseStudies.length - 1 ? " pb-12 border-b-2" : ""}`}
-            >
-              <h3 className="font-sans text-3xl lg:text-4xl font-bold text-[#5F5644] mb-8">
-                {study.title}
-              </h3>
+          {caseStudies.map((study, index) => {
+            const result = study.results;
 
-              <div className="grid md:grid-cols-2 gap-8 mb-8">
-                <div>
-                  {/* <h4 className="font-sans text-lg font-bold text-[#5F5644] mb-3">
+            return (
+              <div
+                key={index}
+                className={`border-t-2 border-divider pt-12${index === caseStudies.length - 1 ? " pb-12 border-b-2" : ""}`}
+              >
+                <h3 className="font-sans text-3xl lg:text-4xl font-bold text-[#5F5644] mb-8">
+                  {study.title}
+                </h3>
+
+                <div className="grid md:grid-cols-2 gap-8 mb-8">
+                  <div>
+                    {/* <h4 className="font-sans text-lg font-bold text-[#5F5644] mb-3">
                     Background
                   </h4> */}
-                  <p className="text-[#5F5644] leading-relaxed">
-                    {study.background}
-                  </p>
-                </div>
+                    <p className="text-[#5F5644] leading-relaxed">
+                      {study.background}
+                    </p>
+                  </div>
 
-                <div>
-                  {/* <h4 className="font-sans text-lg font-bold text-[#5F5644] mb-3">
+                  <div>
+                    {/* <h4 className="font-sans text-lg font-bold text-[#5F5644] mb-3">
                     Results
                   </h4> */}
-                  {typeof study.results === "string" ? (
-                    <p className="text-[#5F5644] leading-relaxed">
-                      {study.results}
-                    </p>
-                  ) : (
-                    <img
-                      src={study.results.image}
-                      alt={study.results.alt ?? "Results"}
-                      className="w-full rounded-lg object-cover"
-                    />
-                  )}
+                    {typeof result === "string" ? (
+                      <p className="text-[#5F5644] leading-relaxed">
+                        {result}
+                      </p>
+                    ) : (
+                      // <img
+                      //   src={study.results.image}
+                      //   alt={study.results.alt ?? "Results"}
+                      //   className="w-full rounded-lg object-cover"
+                      // />
+                      <img
+                        src={result.image}
+                        alt={result.alt ?? "Results"}
+                        className="w-full rounded-lg object-cover cursor-pointer transition-transform duration-200 hover:scale-[1.02]"
+                        onClick={() =>
+                          setSelectedImage({
+                            src: result.image,
+                            alt: result.alt ?? "Results",
+                          })
+                        }
+                      />
+                    )}
+                  </div>
                 </div>
               </div>
-            </div>
-          ))}
+            );
+          })}
         </div>
+        {selectedImage && (
+          <div
+            className="fixed inset-0 z-50 bg-black/80 flex items-center justify-center p-4"
+            onClick={() => setSelectedImage(null)}
+          >
+            <div
+              className="relative max-w-5xl max-h-[90vh]"
+              onClick={(e) => e.stopPropagation()}
+            >
+              <button
+                onClick={() => setSelectedImage(null)}
+                className="absolute -top-3 -right-3 w-10 h-10 rounded-full bg-white text-black text-2xl leading-none shadow-md"
+                aria-label="Close enlarged image"
+              >
+                ×
+              </button>
+
+              <img
+                src={selectedImage.src}
+                alt={selectedImage.alt}
+                className="max-w-full max-h-[90vh] rounded-lg shadow-2xl"
+              />
+            </div>
+          </div>
+        )}
       </div>
     </section>
   );
