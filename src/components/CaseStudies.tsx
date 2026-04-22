@@ -1,5 +1,6 @@
 import { useIntersectionObserver } from "../hooks/useIntersectionObserver";
 import { useState } from "react";
+import { createPortal } from "react-dom";
 import granblue from "../img/GRANBLUE.png";
 import tmntPackage from "../img/TMNT_PACKAGE.png";
 import rf3sJournal from "../img/RF3S_journal.png";
@@ -110,21 +111,22 @@ export const CaseStudies = () => {
   } | null>(null);
 
   return (
-    <section
-      id="case-studies"
-      ref={ref as React.RefObject<HTMLElement>}
-      className={`py-24 bg-[#CBDB2A] fade-slide-up ${isVisible ? "visible" : ""}`}
-    >
-      <div className="max-w-7xl mx-auto px-6 lg:px-8">
-        <div className="max-w-3xl mb-16">
-          <h2 className="font-sans text-4xl lg:text-5xl font-bold text-[#5F5644] mb-6">
-            Case Studies
-          </h2>
-          <p className="text-lg text-[#5F5644] leading-relaxed">
-            A closer look at how we approach challenges — and the results we
-            deliver.
-          </p>
-        </div>
+    <>
+      <section
+        id="case-studies"
+        ref={ref as React.RefObject<HTMLElement>}
+        className={`py-24 bg-[#CBDB2A] fade-slide-up ${isVisible ? "visible" : ""}`}
+      >
+        <div className="max-w-7xl mx-auto px-6 lg:px-8">
+          <div className="max-w-3xl mb-16">
+            <h2 className="font-sans text-4xl lg:text-5xl font-bold text-[#5F5644] mb-6">
+              Case Studies
+            </h2>
+            <p className="text-lg text-[#5F5644] leading-relaxed">
+              A closer look at how we approach challenges — and the results we
+              deliver.
+            </p>
+          </div>
 
         <div className="space-y-20">
           {caseStudies.map((study, index) => {
@@ -181,18 +183,22 @@ export const CaseStudies = () => {
             );
           })}
         </div>
-        {selectedImage && (
+        </div>
+      </section>
+
+      {selectedImage &&
+        createPortal(
           <div
-            className="fixed inset-0 z-50 bg-black/80 flex items-center justify-center p-4"
+            className="fixed inset-0 z-[100] bg-black/80 flex items-center justify-center p-4"
             onClick={() => setSelectedImage(null)}
           >
             <div
-              className="relative max-w-5xl max-h-[90vh]"
+              className="relative w-full max-w-5xl"
               onClick={(e) => e.stopPropagation()}
             >
               <button
                 onClick={() => setSelectedImage(null)}
-                className="absolute -top-3 -right-3 w-10 h-10 rounded-full bg-white text-black text-2xl leading-none shadow-md"
+                className="absolute -top-3 -right-3 z-10 w-10 h-10 rounded-full bg-white text-black text-2xl leading-none shadow-md"
                 aria-label="Close enlarged image"
               >
                 ×
@@ -201,12 +207,12 @@ export const CaseStudies = () => {
               <img
                 src={selectedImage.src}
                 alt={selectedImage.alt}
-                className="max-w-full max-h-[90vh] rounded-lg shadow-2xl"
+                className="block max-w-full max-h-[90vh] mx-auto rounded-lg shadow-2xl object-contain"
               />
             </div>
-          </div>
+          </div>,
+          document.body
         )}
-      </div>
-    </section>
+    </>
   );
 };

@@ -38,7 +38,7 @@ export const Contact = () => {
             <div key={index} className="flex items-center justify-center gap-4 p-6 bg-warm-white/5 rounded-lg hover:bg-warm-white/10 transition-colors">
               <div className="text-accent-gold">{info.icon}</div>
               <div className="text-left">
-                <div className="text-sm text-warm-white/70">{info.label}</div>
+                <div className="text-sm text-[#5F5644]">{info.label}</div>
                 <div className="text-lg font-medium">{info.value}</div>
               </div>
             </div>
