@@ -5,12 +5,17 @@ export const useIntersectionObserver = (options?: IntersectionObserverInit) => {
   const ref = useRef<HTMLElement>(null);
 
   useEffect(() => {
+    if (!('IntersectionObserver' in window)) {
+      setIsVisible(true);
+      return;
+    }
+
     const observer = new IntersectionObserver(([entry]) => {
       if (entry.isIntersecting) {
         setIsVisible(true);
       }
     }, {
-      threshold: 0.1,
+      threshold: 0,
       ...options,
     });
 
@@ -23,6 +28,7 @@ export const useIntersectionObserver = (options?: IntersectionObserverInit) => {
       if (currentRef) {
         observer.unobserve(currentRef);
       }
+      observer.disconnect();
     };
   }, [options]);
 

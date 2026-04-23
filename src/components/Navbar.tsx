@@ -65,7 +65,7 @@ export const Navbar = () => {
           </div>
 
           <button
-            className="md:hidden p-2 text-white"
+            className="md:hidden p-2 text-[#5F5644]"
             onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
             aria-label="Toggle menu"
           >
@@ -82,7 +82,7 @@ export const Navbar = () => {
                 key={link.href}
                 href={link.href}
                 onClick={(e) => handleNavClick(e, link.href)}
-                className="block text-white hover:text-white/80 transition-colors duration-200 font-medium py-2"
+                className="block text-[#5F5644] hover:text-[#5F5644]/80 transition-colors duration-200 font-medium py-2"
               >
                 {link.label}
               </a>
