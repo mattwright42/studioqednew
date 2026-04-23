@@ -1,4 +1,5 @@
 import { useIntersectionObserver } from '../hooks/useIntersectionObserver';
+import awardsImg from "../img/ABOUT_awards.png";
 
 export const About = () => {
   const { ref, isVisible } = useIntersectionObserver();
@@ -13,7 +14,7 @@ export const About = () => {
         <div className="grid lg:grid-cols-2 gap-16 items-center">
           <div className="aspect-square bg-[#CBDB2A] relative flex items-center justify-center">
             <img
-              src="/src/img/ABOUT_awards.png"
+              src={awardsImg}
               alt="Awards and Recognition"
               className="w-full h-full object-contain"
             />
